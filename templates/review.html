@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+{% block title %}Write Your Reviews — CineScope{% endblock %}
+
+{% block content %}
+<section class="review-section">
+
+  <!-- Hero -->
+  <div class="review-hero">
+    <h1 class="review-hero-title">
+      <span class="gradient-text">Your Movie Reviews</span>
+    </h1>
+    <p class="review-hero-sub">
+      Watch. Feel. Express. Our AI will analyse the sentiment of your words.
+    </p>
+  </div>
+
+  <!-- Review Form -->
+  <form action="{{ url_for('submit') }}" method="POST" class="reviews-form" id="reviews-form">
+    <div class="movies-grid">
+
+      {% for movie in movies %}
+      <div class="movie-card" id="movie-card-{{ loop.index0 }}" style="animation-delay: {{ loop.index0 * 0.15 }}s">
+
+        <!-- Poster -->
+        <div class="poster-wrapper">
+          <img
+            src="{{ url_for('static', filename='posters/' + movie.poster) }}"
+            alt="{{ movie.name }} movie poster"
+            class="movie-poster"
+            id="poster-{{ loop.index0 }}"
+          />
+          <div class="poster-overlay">
+            <span class="overlay-label">Now Reviewing</span>
+          </div>
+        </div>
+
+        <!-- Movie Title -->
+        <div class="movie-info">
+          <h2 class="movie-title">{{ movie.name }}</h2>
+          <div class="rating-stars" aria-hidden="true">★★★★★</div>
+        </div>
+
+        <!-- Review Textarea -->
+        <div class="review-input-group">
+          <label for="review_{{ loop.index0 }}" class="review-label">Your Review</label>
+          <textarea
+            id="review_{{ loop.index0 }}"
+            name="review_{{ loop.index0 }}"
+            class="review-textarea"
+            placeholder="Share your thoughts about {{ movie.name }}... What did you love or hate? How did it make you feel?"
+            rows="4"
+            maxlength="1000"
+          ></textarea>
+          <div class="char-counter">
+            <span class="char-count" id="counter-{{ loop.index0 }}">0</span>/1000
+          </div>
+        </div>
+
+      </div>
+      {% endfor %}
+
+    </div>
+
+    <!-- Submit Button -->
+    <div class="submit-zone">
+      <p class="submit-hint">🤖 Our AI will analyse the sentiment of all 3 reviews</p>
+      <button type="submit" class="btn-submit" id="submit-reviews">
+        <span class="btn-submit-icon">🎯</span>
+        <span class="btn-submit-text">Analyse All Reviews</span>
+        <span class="btn-submit-arrow">→</span>
+      </button>
+    </div>
+
+  </form>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+// Character counters for each textarea
+document.querySelectorAll('.review-textarea').forEach(function(ta, idx) {
+  var counter = document.getElementById('counter-' + idx);
+  ta.addEventListener('input', function() {
+    counter.textContent = ta.value.length;
+    if (ta.value.length > 900) {
+      counter.style.color = '#f59e0b';
+    } else {
+      counter.style.color = '';
+    }
+  });
+});
+
+// Jinja2 compatible enumerate helper used above isn't default — already handled server-side
+</script>
+{% endblock %}

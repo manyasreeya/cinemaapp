@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+{% block title %}Register — CineScope{% endblock %}
+
+{% block content %}
+<section class="auth-section">
+  <div class="auth-glow"></div>
+
+  <div class="auth-card" id="register-card">
+    <div class="auth-header">
+      <div class="auth-icon">🎭</div>
+      <h1 class="auth-title">Join CineScope</h1>
+      <p class="auth-subtitle">Create your account and start reviewing movies</p>
+    </div>
+
+    <form action="{{ url_for('register') }}" method="POST" class="auth-form" id="register-form" novalidate>
+
+      <div class="form-group">
+        <label for="username" class="form-label">Username</label>
+        <div class="input-wrapper">
+          <span class="input-icon">👤</span>
+          <input
+            type="text"
+            id="username"
+            name="username"
+            class="form-input"
+            placeholder="Choose a username"
+            autocomplete="username"
+            required
+          />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="email" class="form-label">Email Address</label>
+        <div class="input-wrapper">
+          <span class="input-icon">✉️</span>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            class="form-input"
+            placeholder="your@email.com"
+            autocomplete="email"
+            required
+          />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="password" class="form-label">Password</label>
+        <div class="input-wrapper">
+          <span class="input-icon">🔒</span>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            class="form-input"
+            placeholder="Min. 6 characters"
+            autocomplete="new-password"
+            required
+          />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="confirm" class="form-label">Confirm Password</label>
+        <div class="input-wrapper">
+          <span class="input-icon">🔑</span>
+          <input
+            type="password"
+            id="confirm"
+            name="confirm"
+            class="form-input"
+            placeholder="Repeat your password"
+            autocomplete="new-password"
+            required
+          />
+        </div>
+      </div>
+
+      <button type="submit" class="btn-primary btn-full" id="register-submit">
+        <span class="btn-text">Create Account</span>
+        <span class="btn-icon">→</span>
+      </button>
+    </form>
+
+    <div class="auth-footer">
+      <p>Already have an account? <a href="{{ url_for('login') }}" class="auth-link" id="go-to-login">Sign in here</a></p>
+    </div>
+  </div>
+</section>
+{% endblock %}
